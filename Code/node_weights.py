@@ -1,13 +1,18 @@
 import csv
 
-file = open(
-    'train_data.csv', 'r')
-reader = csv.reader(file, skipinitialspace=True, quotechar="'", delimiter=',')
+########################################
+##      Generating Train_weights      ##
+########################################
 
-Trains_list = {}
-Station_to_Train = {}
-Train_to_name = {}
-Train_to_station = {}
+file = open('train_data.csv', 'r')
+reader = csv.reader(file, skipinitialspace=True, quotechar="'", delimiter=',')
+# [Train No., train Name, islno, station Code, Station Name, Arrival time,
+#    Departure time, Distance, Source Station Code, source Station Name, Destination station Code, Destination Station Name]
+
+Trains_list = {} # dictionary : {}
+Station_to_Train = {} # dictionary : {station_code : [train_no.]}
+Train_to_name = {} # dictionary : {station_code: [train_nos]}
+Train_to_station = {} # dictionary : {Train_no: [station_codes]}
 
 flag = True
 for x in reader:
@@ -28,28 +33,21 @@ nodes_list = []
 for x in Station_to_Train:
     nodes_list.append([x, 10*len(Station_to_Train[x])])
 
-outputfile = open(
-    "stationWeights.csv", 'w')
+outputfile = open("stationWeights.csv", 'w')
 wr = csv.writer(outputfile, quoting=csv.QUOTE_NONE, delimiter=',')
 wr.writerows(nodes_list)
-
-# for x in Station_to_Train:
-# 	weight = 10.0/len(Station_to_Train[x])
-# 	for y in Station_to_Train[x]:
-# 		if not y in Trains_list:
-# 			Trains_list[y] = weight
-# 		if weight > Trains_list[y]:
-# 			Trains_list[y] = weight
 
 weights_list = []
 
 for x in Train_to_station:
-    weights_list.append(
-        ["'" + x + "'", Train_to_name[x], len(Train_to_station[x])])
+    weights_list.append(["'" + x + "'", Train_to_name[x], len(Train_to_station[x])])
 
-outputfile = open(
-    "trainWeights.csv", 'w')
+outputfile = open("trainWeights.csv", 'w')
 wr = csv.writer(outputfile, quoting=csv.QUOTE_NONE, delimiter=',')
 wr.writerows(weights_list)
 
-print("Output saved in trainWeights.csv")
+#trainWeight.csv : [train_code, train name, no. of stations they pass through]
+
+#stationWeights.csv : [station_code, weight]
+
+print("Output saved in trainWeights.csv & stationWeights.csv")

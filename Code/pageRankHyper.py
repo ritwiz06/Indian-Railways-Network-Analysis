@@ -1,6 +1,13 @@
 import networkx as nx
 import csv
 
+#####################################################
+##      Generating PageRank from Hypergraph        ##
+#####################################################
+
+# same as pageRankSimple, but instead of taking the simple graph, we compute pagerank in Hypergraphs
+# So in this case, instead of stations, trains are ranked as pages in network
+
 G = nx.Graph()
 
 file = open('trainWeights.csv', 'r')
