@@ -10,11 +10,12 @@ StationWeight = {}
 
 flag = True
 for x in reader:
-    if flag:
-        flag = not flag
-    else:
-        StationWeight[x[0]] = int(x[2])
-        G.add_node(x[0])
+    if(len(x)!=0):
+        if flag:
+            flag = not flag
+        else:
+            StationWeight[x[0]] = int(x[1])
+            G.add_node(x[0])
 
 file.close()
 pageRank = nx.pagerank(G, personalization=StationWeight)
@@ -27,3 +28,5 @@ for x in pageRank:
 outputfile = open("pageRankSimple.csv", 'w')
 wr = csv.writer(outputfile, quoting=csv.QUOTE_NONE, delimiter=',')
 wr.writerows(pr_list)
+
+print("Output saved in pageRankSimple.csv")

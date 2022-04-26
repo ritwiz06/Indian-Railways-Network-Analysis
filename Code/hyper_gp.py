@@ -1,5 +1,9 @@
 import csv
 
+# traindata.csv has details of 69000 train and their journeys
+# sample record : [Train No., train Name, islno, station Code, Station Name, Arrival time,
+#    Departure time, Distance, Source Station Code, source Station Name, Destination station Code, Destination Station Name]
+
 file = open('train_data.csv', 'r')
 reader = csv.reader(file, skipinitialspace=True, quotechar="'", delimiter=',')
 
@@ -14,8 +18,8 @@ for x in reader:
     if flag:
         flag = not flag
     else:
-        if not x[0] in Trains_list:
-            Trains_list.append(x[0])
+        if not x[0] in Trains_list: # if this train has already not been recorded
+            Trains_list.append(x[0]) # add the train name to list of trains
             Train_to_Label[x[0]] = x[1]
             Train_to_Station[x[0]] = []
         Train_to_Distance[x[0]] = int(x[7])
@@ -52,3 +56,5 @@ for x in Trains_list:
 outputfile = open("hypernodes.csv", 'w')
 wr = csv.writer(outputfile, quoting=csv.QUOTE_NONE, delimiter=',')
 wr.writerows(nodes_list)
+
+print("Output saved in hypernodes.csv & hyperedges.csv")
