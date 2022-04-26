@@ -51,3 +51,5 @@ outputfile = open(
     "trainWeights.csv", 'w')
 wr = csv.writer(outputfile, quoting=csv.QUOTE_NONE, delimiter=',')
 wr.writerows(weights_list)
+
+print("Output saved in trainWeights.csv")
